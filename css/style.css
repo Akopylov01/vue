@@ -1,0 +1,14 @@
+.list_elem{
+    cursor:pointer;
+}
+button{
+    cursor:pointer;
+}
+.line{
+    text-decoration: line-through;
+
+}
+.notLine{
+    text-decoration: none;
+    cursor: pointer;
+}
