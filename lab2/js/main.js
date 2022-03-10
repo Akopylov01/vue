@@ -14,9 +14,10 @@ let app = new Vue({
         visible: true,
         currentPlayer:'',
         field: [],
-        fieldSize: '',
+        fieldSize: 3,
         fieldWitdh: '',
         countCell: '',
+        fieldSizeArr: []
     },
     // mounted() {
     //     if (localStorage.xName && localStorage.oName) {
@@ -148,102 +149,110 @@ let app = new Vue({
             this.win = "";
             this.countCell = this.fieldSize * this.fieldSize;
             this.fieldWitdh = this.fieldSize * 50 + this.fieldSize * 2;
+
             for(let i = 0; i < this.countCell; ++i){
                 this.field[i] = 0;
             }
-            for(let i = 0; i < this.countCell; ++i){
+            for(let i = 0; i < this.countCell; i++){
                 Vue.set(this.field,i,0);
             }
             
         },
         winner: function(){
-            if(this.fieldSize == 3){
-                this.for3Wineer();
-            }
-            else if (this.fieldSize == 4){
-                this.for4Winner();
-            }
-            },
-        for3Wineer: function(){
-            for(let i=0; i < countCell; i+=3){
-                if(this.field[i]!=0 && this.field[i] == this.field[i+1] && this.field[i] == this.field[i+2]){
-                    this.isWinner = true;
-                    this.message = 'Победил';
-                    return this.currentPlayer;
-                }
-            }
-            for(let i = 0; i < countCell; i++){
-                if(this.field[i]!=0 && this.field[i] == this.field[i+3] && this.field[i+3] == this.field[i+6]){
-                    this.isWinner = true;
-                    this.message = 'Победил';
-                    return this.currentPlayer;
-                }
-            }
-            if(this.field[0]!=0 && this.field[0]==this.field[4] && this.field[4] == this.field[8]){
+            if(this.horisontalWinner()){
                 this.isWinner = true;
                 this.message = 'Победил';
-                return this.currentPlayer;
+                return this.currentPlayer;           
             }
-            if(this.field[2]!=0 && this.field[2] == this.field[4] && this.field[4] == this.field[6]){
+            if(this.verticalWinner()){
                 this.isWinner = true;
                 this.message = 'Победил';
-                return this.currentPlayer;
+                return this.currentPlayer;           
+            }
+            if(this.leftDiagonal()){
+                this.isWinner = true;
+                this.message = 'Победил';
+                return this.currentPlayer;           
+            }
+            if(this.rightDiagonal()){
+                this.isWinner = true;
+                this.message = 'Победил';
+                return this.currentPlayer;           
             }
         },
-        for4Winner: function(){
-            for(let i=0; i < 16; i+=4){
-                if(this.field[i]!=0 && this.field[i] == this.field[i+1] && this.field[i] == this.field[i+2] && this.field[i] == this.field[i+3]){
-                    this.isWinner = true;
-                    this.message = 'Победил';
-                    return this.currentPlayer;
-                }
+        leftDiagonal: function(){
+            let count = 0;
+            for(let i = 0; i < this.countCell; i += this.fieldSize + 1){
+                if(this.field[i]!=0 && this.field[i] === this.field[i + this.fieldSize + 1]){
+                        count +=1 ;
+                    }
             }
-            for(let i = 0; i < 16; i++){
-                if(this.field[i]!=0 && this.field[i] == this.field[i+4] && this.field[i+4] == this.field[i+8] && this.field[i+8] == this.field[i+12]){
-                    this.isWinner = true;
-                    this.message = 'Победил';
-                    return this.currentPlayer;
-                }
+            if(count == this.fieldSize - 1){
+                return true;
             }
-            if(this.field[0]!=0 && this.field[0]==this.field[5] && this.field[5] == this.field[10] && this.field[10] == this.field[15]){
-                this.isWinner = true;
-                this.message = 'Победил';
-                return this.currentPlayer;
+            else{
+                count = 0;
             }
-            if(this.field[3]!=0 && this.field[3] == this.field[6] && this.field[6] == this.field[9] && this.field[9] == this.field[12]){
-                this.isWinner = true;
-                this.message = 'Победил';
-                return this.currentPlayer;
-            }
+            return false;
         },
-        for5Winner: function(){
-            for(let i=0; i < 25; i+=5){
-                if(this.field[i]!=0 && this.field[i] == this.field[i+1] && this.field[i] == this.field[i+2] && this.field[i] == this.field[i+3] && this.field[i] == this.field[i+4]){
-                    this.isWinner = true;
-                    this.message = 'Победил';
-                    return this.currentPlayer;
+        rightDiagonal: function(){
+            let count = 0;
+            for(let i = this.fieldSize - 1; i < this.countCell; i += this.fieldSize - 1){
+                if(this.field[i]!=0 && this.field[i] === this.field[i + this.fieldSize - 1]){
+                        count +=1 ;
+                    }
+            }
+            if(count == this.fieldSize - 1){
+                return true;
+            }
+            else{
+                count = 0;
+            }
+            return false;
+        },
+        horisontalWinner: function(){
+            let count = 0;
+            for(let i = 0; i < this.countCell; i += this.fieldSize){
+                for(let j = i; j < i + this.fieldSize - 1; j++){
+                    if(this.field[j]!=0 && this.field[j] === this.field[j + 1]){
+                        count +=1 ;
+                    }
                 }
-            }
-            for(let i = 0; i < 25; i++){
-                if(this.field[i]!=0 && this.field[i] == this.field[i+5] && this.field[i+10] == this.field[i+5] && this.field[i+5] == this.field[i+10] && this.field[i+10] == this.field[i+15] && this.field[i+15] == this.field[i+20]){
-                    this.isWinner = true;
-                    this.message = 'Победил';
-                    return this.currentPlayer;
+                if(count == this.fieldSize - 1){
+                    return true;
                 }
+                else{
+                    count = 0;
+                }
+                
             }
-            if(this.field[0]!=0 && this.field[0]==this.field[6] && this.field[6] == this.field[12] && this.field[12] == this.field[18] && this.field[18] == this.field[24]){
-                this.isWinner = true;
-                this.message = 'Победил';
-                return this.currentPlayer;
+            return false;
+
+        },
+        verticalWinner: function(){
+            let count = 0;
+            for(let i = 0; i < this.fieldSize; i++){
+                let j = 0;
+
+                for(j = i + j; j < this.countCell; j+=this.fieldSize){
+                    if(this.field[j]!=0 && this.field[j]==this.field[j + this.fieldSize]){
+                        count ++;
+
+                    }
+                }
+                if(count==this.fieldSize - 1){
+                    return true;
+                }
+                else{
+                    count = 0;
+                }
+                
+                
             }
-            if(this.field[4]!=0 && this.field[4] == this.field[8] && this.field[8] == this.field[12] && this.field[12] == this.field[16] && this.field[16] == this.field[20]){
-                this.isWinner = true;
-                this.message = 'Победил';
-                return this.currentPlayer;
-            }
-        }
-            
-        }
+            return false;
+
+        },
+    }
     
 })
 
