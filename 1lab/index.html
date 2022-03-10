@@ -3,23 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="js/vue.min.js"></script>
     <script defer src="js/main.js"></script>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div id="user_name">
+    <div id="list">
         <p>Привет, {{name}}</p>
         <input v-show="visible" v-model="name" placeholder="Введите ваше имя">
         <button v-on:click="visible=!visible">{{visible?'Скрыть':'Отобразить'}}</button>
-    </div>
-
-
-
-    <div id="list">
         <h2>Список покупок</h2>
         <p>
-            <input v-model="newPurchase" placeholder="Введите покупку">
+            <input type="text" v-model="newPurchase" value="">
             <button v-on:click="purchases.push({ text:newPurchase, className: 'notLine'})">Добавить</button>
         </p>
 

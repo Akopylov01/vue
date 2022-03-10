@@ -11,7 +11,7 @@
     <div class="content">
         <h1>Крестики-нолики</h1>
         <div id="field">
-            <p>{{xName}} vs {{oName}}</p>
+            <p v-show='xOro'>{{xOro[0]}} vs {{xOro[1]}}</p>
             <div v-for="(item,index) in field">
                 <div @click="cellClick(index)">
                     <div v-show="item !== 0">
@@ -20,14 +20,14 @@
                 </div>
             </div>
             <button @click="makeNewField">Новая игра</button>
-            <span v-show="isEnd">{{ endMessage }}</span>
-            <span v-show="isWinner">{{message}} {{ win }}</span>
-            <input v-show="visible" v-model="xName" placeholder="Игрок1">
-            <input v-show="visible" v-model="oName" placeholder="Игрок2">
-            <button v-on:click="visible=!visible">{{visible?'Скрыть':'Отобразить'}}</button>
+            <span v-show="isWinner">{{ message }} {{ win }}</span>
+            <input v-show="visible" v-model="player1" placeholder="Игрок1">
+            <input v-show="visible" v-model="player2" placeholder="Игрок2">
+            <button @click="savePlayers">Добавить</button>
+            <button @click="visible=!visible; formvalue=' ';">{{visible?'Скрыть':'Отобразить'}}</button>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="js/vue.min.js"></script>
     <script defer src="js/main.js"></script>
 </body>
 </html>

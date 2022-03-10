@@ -3,14 +3,15 @@ let app = new Vue({
     el: '#field',
     data: {
         isWinner: false,
-        isEnd: false,
-        endMessage: '',
         message:'',
         win:'',
+        player1:'',
+        player2:'',
+        xOro: [],
         xName: '',
         oName: '',
         visible: true,
-        player:'',
+        currentPlayer:'',
         field: [0,0,0,0,0,0,0,0,0],
         
     },
@@ -24,33 +25,57 @@ let app = new Vue({
         xName(newName) {
             localStorage.xName = newName;
         },
-        oName(newName){
-            localStorage.oName = newName;
+        oName(newName2){
+            localStorage.oName = newName2;
         }
     },
     methods:{
+        checkNoEmptyNames: function(){
+            if(this.player1.trim().length() == 0 || this.player2.trim().length() == 0 ){
+                this.isWinner = true;
+                this.message = 'Введите имена игроков';
+                return false;
+            }
+            return true;
+        },
+        savePlayers: function(){
+            if(checkNoEmptyNames()){
+                this.xOro = [];
+                this.xOro.push(this.player1, this.player2);
+                this.player1 = '';
+                this.player2 = '';
+            }
+            
+        },
         getThisPlayer: function(){
-            if(this.player == this.xName){
-                this.player = this.oName;
+            if(this.currentPlayer == this.xOro[0]){
+                this.currentPlayer = this.xOro[1];
             }
             else{
-                this.player = this.xName;
+                this.currentPlayer = this.xOro[0];
             }
         },
         cellClick: function(id){
-            this.getThisPlayer();
-            if(this.isWinner){
-                this.message = 'Начните заново';
-            }
-            else if(this.field[id] == 0){
-                if(this.player===this.xName)
-                    Vue.set(this.field, id, 'X');
-                else
-                    Vue.set(this.field, id, 'O');
+            if(checkNoEmptyNames()){
+                if(this.isWinner){
+                    this.message = 'Начните заново';
+                }
+                else if(this.field[id] == 0){
+                    if(this.currentPlayer===this.xOro[0])
+                    {
+                        Vue.set(this.field, id, 'X');
+                    }
+                    else{
+                        Vue.set(this.field, id, 'O');
+                    }
+                    this.getThisPlayer();
+                    
+                }
                 
+                this.IsOver();
+                this.win = this.winner();
             }
-            this.IsOver();
-            this.win = this.winner();
+            
 
         },
         IsOver : function(){
@@ -60,13 +85,12 @@ let app = new Vue({
                     ++sum;
             }
             if(sum <= 0){
-                this.endMessage = 'Конец игры';
+                this.message = 'Конец игры';
 
-                this.isEnd = true;
+                this.isWinner = true;
             }
         },
         makeNewField: function(){
-            this.isEnd = false;
             this.isWinner = false;
             this.win = "";
             for(let i = 0; i < 9; ++i){
@@ -74,30 +98,35 @@ let app = new Vue({
             }
         },
         winner: function(){
+            if(this.isWinner){
+                this.message = 'Начните заново';
 
-            for(let i=0; i < 9; i+=3){
-                if(this.field[i]!=0 && this.field[i] == this.field[i+1] && this.field[i] == this.field[i+2]){
+            }
+            else{
+                for(let i=0; i < 9; i+=3){
+                    if(this.field[i]!=0 && this.field[i] == this.field[i+1] && this.field[i] == this.field[i+2]){
+                        this.isWinner = true;
+                        this.message = 'Победил';
+                        return this.currentPlayer;
+                    }
+                }
+                for(let i = 0; i < 9; i++){
+                    if(this.field[i]!=0 && this.field[i] == this.field[i+3] && this.field[i+3] == this.field[i+6]){
+                        this.isWinner = true;
+                        this.message = 'Победил';
+                        return this.currentPlayer;
+                    }
+                }
+                if(this.field[0]!=0 && this.field[0]==this.field[4] && this.field[4] == this.field[8]){
                     this.isWinner = true;
                     this.message = 'Победил';
-                    return this.player;
+                    return this.currentPlayer;
                 }
-            }
-            for(let i = 0; i < 9; i++){
-                if(this.field[i]!=0 && this.field[i] == this.field[i+3] && this.field[i+3] == this.field[i+6]){
+                if(this.field[2]!=0 && this.field[2] == this.field[4] && this.field[4] == this.field[6]){
                     this.isWinner = true;
                     this.message = 'Победил';
-                    return this.player;
+                    return this.currentPlayer;
                 }
-            }
-            if(this.field[0]!=0 && this.field[0]==this.field[4] && this.field[4] == this.field[8]){
-                this.isWinner = true;
-                this.message = 'Победил';
-                return this.player;
-            }
-            if(this.field[2]!=0 && this.field[2] == this.field[4] && this.field[4] == this.field[6]){
-                this.isWinner = true;
-                this.message = 'Победил';
-                return this.player;
             }
 
         }

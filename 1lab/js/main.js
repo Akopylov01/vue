@@ -1,8 +1,17 @@
-let userName = new Vue({
-    el: '#user_name',
+
+
+let list = new Vue({
+    el: '#list',
     data: {
         visible: true,
         name: '',
+        newPurchase: '',
+        purchases:[
+            {
+                text:'Здесь находятся ваши покупки', status: true, className: 'notLine',
+            }
+        ],
+
     },
     mounted() {
         if (localStorage.name) {
@@ -14,19 +23,6 @@ let userName = new Vue({
             localStorage.name = newName;
         }
     }
-});
-
-let list = new Vue({
-    el: '#list',
-    data: {
-        newPurchase: '',
-        purchases:[
-            {
-                text:'Здесь находятся ваши покупки', status: true, className: 'notLine',
-            }
-        ],
-
-    },
 
 
 });
