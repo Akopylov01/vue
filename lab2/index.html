@@ -10,21 +10,28 @@
 
     <div class="content">
         <h1>Крестики-нолики</h1>
-        <div id="field">
-            <p v-show='xOro'>{{xOro[0]}} vs {{xOro[1]}}</p>
-            <div v-for="(item,index) in field">
-                <div @click="cellClick(index)">
-                    <div v-show="item !== 0">
-                        {{ item }}
+        <div id="field" v-bind:style="{width: fieldWitdh + 'px'}">
+            <input v-model="fieldSize" placeholder="Количество клеток">
+            <button @click="makeNewField">Добавить</button>
+            <div>
+                <p v-show='scoreboardVisible'>{{xOro[0]}} vs {{xOro[1]}}</p>
+                <div v-for="(item, index) in field">
+                    <div @click="cellClick(index)">
+                        <div v-show="item !== 0">
+                            {{ item }}
+                        </div>
                     </div>
                 </div>
+                <button @click="makeNewField">Новая игра</button>
+                <span v-show="xMove">ХОД {{ xOro[0] }}</span>
+                <span v-show="oMove">ХОД {{ xOro[1] }}</span>
+
+                <span v-show="isWinner">{{ message }} {{ win }}</span>
+                <input v-show="visible" v-model="player1" placeholder="Игрок1">
+                <input v-show="visible" v-model="player2" placeholder="Игрок2">
+                <button v-show="visible" @click="savePlayers">Добавить</button>
+                <button @click="visible=!visible; formvalue=' ';">{{visible?'Скрыть':'Отобразить'}}</button>
             </div>
-            <button @click="makeNewField">Новая игра</button>
-            <span v-show="isWinner">{{ message }} {{ win }}</span>
-            <input v-show="visible" v-model="player1" placeholder="Игрок1">
-            <input v-show="visible" v-model="player2" placeholder="Игрок2">
-            <button @click="savePlayers">Добавить</button>
-            <button @click="visible=!visible; formvalue=' ';">{{visible?'Скрыть':'Отобразить'}}</button>
         </div>
     </div>
     <script src="js/vue.min.js"></script>
