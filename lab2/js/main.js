@@ -2,6 +2,7 @@
 let app = new Vue({
     el: '#field',
     data: {
+        fieldSize: 3,
         scoreboardVisible: false,
         xMove: true,
         oMove: false,
@@ -14,10 +15,8 @@ let app = new Vue({
         visible: true,
         currentPlayer:'',
         field: [],
-        fieldSize: 3,
         fieldWitdh: '',
         countCell: '',
-        fieldSizeArr: []
     },
     // mounted() {
     //     if (localStorage.xName && localStorage.oName) {
@@ -103,30 +102,18 @@ let app = new Vue({
                 else if(this.field[id] == 0){
                     if(this.currentPlayer===this.xOro[0])
                     {
-                        
-
                         Vue.set(this.field, id, 'X');
                         this.xMove = !this.xMove;
                         this.oMove = !this.oMove;
-
-
-
                     }
                     else{
                         this.xMove = !this.xMove;
-
                         Vue.set(this.field, id, 'O');
-
                         this.oMove = !this.oMove;
-
-
-
-
                     }
                     this.getThisPlayer();
                     
                 }
-                
                 this.IsOver();
                 this.win = this.winner();
             }
@@ -144,41 +131,56 @@ let app = new Vue({
             }
         },
         makeNewField: function(){
-            this.field = [];
             this.isWinner = false;
             this.win = "";
+            this.fieldSize = Number(this.fieldSize);
             this.countCell = this.fieldSize * this.fieldSize;
             this.fieldWitdh = this.fieldSize * 50 + this.fieldSize * 2;
 
             for(let i = 0; i < this.countCell; ++i){
-                this.field[i] = 0;
+                this.field[i]
             }
             for(let i = 0; i < this.countCell; i++){
                 Vue.set(this.field,i,0);
             }
-            
+            console.log(this.fieldSize);
         },
+
         winner: function(){
-            if(this.horisontalWinner()){
-                this.isWinner = true;
-                this.message = 'Победил';
-                return this.currentPlayer;           
+            if(this.fieldSize <= 5){
+                if(this.horisontalWinner()){
+                    this.isWinner = true;
+                    this.message = 'Победил';
+                    return this.currentPlayer;           
+                }
+                if(this.verticalWinner()){
+                    this.isWinner = true;
+                    this.message = 'Победил';
+                    return this.currentPlayer;           
+                }
+                if(this.leftDiagonal()){
+                    this.isWinner = true;
+                    this.message = 'Победил';
+                    return this.currentPlayer;           
+                }
+                if(this.rightDiagonal()){
+                    this.isWinner = true;
+                    this.message = 'Победил';
+                    return this.currentPlayer;           
+                }
             }
-            if(this.verticalWinner()){
-                this.isWinner = true;
-                this.message = 'Победил';
-                return this.currentPlayer;           
-            }
-            if(this.leftDiagonal()){
-                this.isWinner = true;
-                this.message = 'Победил';
-                return this.currentPlayer;           
-            }
-            if(this.rightDiagonal()){
-                this.isWinner = true;
-                this.message = 'Победил';
-                return this.currentPlayer;           
-            }
+            else{
+                if(this.verticalWinnerFor5()){
+                    this.isWinner = true;
+                    this.message = 'Победил';
+                    return this.currentPlayer;     
+                }
+                if(this.horisontalWinnerFor5()){
+                    this.isWinner = true;
+                    this.message = 'Победил';
+                    return this.currentPlayer;     
+                }
+        }
         },
         leftDiagonal: function(){
             let count = 0;
@@ -247,6 +249,48 @@ let app = new Vue({
                     count = 0;
                 }
                 
+                
+            }
+            return false;
+
+        },
+        verticalWinnerFor5: function(){
+            let count = 0;
+            for(let i = 0; i < this.fieldSize; i++){
+                let j = 0;
+
+                for(j = i + j; j < this.countCell; j+=this.fieldSize){
+                    if(this.field[j]!=0 && this.field[j]==this.field[j + this.fieldSize]){
+                        count ++;
+
+                    }
+                }
+                if(count==4){
+                    return true;
+                }
+                else{
+                    count = 0;
+                }
+                
+                
+            }
+            return false;
+
+        },
+        horisontalWinnerFor5: function(){
+            let count = 0;
+            for(let i = 0; i < this.countCell; i += this.fieldSize){
+                for(let j = i; j < i + this.fieldSize - 1; j++){
+                    if(this.field[j]!=0 && this.field[j] === this.field[j + 1]){
+                        count +=1 ;
+                    }
+                }
+                if(count == 4){
+                    return true;
+                }
+                else{
+                    count = 0;
+                }
                 
             }
             return false;

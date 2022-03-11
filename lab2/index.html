@@ -12,7 +12,6 @@
         <h1>Крестики-нолики</h1>
         <div id="field" v-bind:style="{width: fieldWitdh + 'px'}">
             <input v-model="fieldSize" placeholder="Количество клеток">
-            <button @click="makeNewField">Добавить</button>
             <div>
                 <p v-show='scoreboardVisible'>{{xOro[0]}} vs {{xOro[1]}}</p>
                 <div v-for="(item, index) in field">
@@ -30,7 +29,7 @@
                 <input v-show="visible" v-model="player1" placeholder="Игрок1">
                 <input v-show="visible" v-model="player2" placeholder="Игрок2">
                 <button v-show="visible" @click="savePlayers">Добавить</button>
-                <button @click="visible=!visible; formvalue=' ';">{{visible?'Скрыть':'Отобразить'}}</button>
+                <button @click="visible=!visible;">{{visible?'Скрыть':'Отобразить'}}</button>
             </div>
         </div>
     </div>
