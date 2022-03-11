@@ -180,6 +180,16 @@ let app = new Vue({
                     this.message = 'Победил';
                     return this.currentPlayer;     
                 }
+                if(this.leftDiagonalFor5()){
+                    this.isWinner = true;
+                    this.message = 'Победил';
+                    return this.currentPlayer;     
+                }
+                if(this.rightDiagonalFor5()){
+                    this.isWinner = true;
+                    this.message = 'Победил';
+                    return this.currentPlayer;     
+                }
         }
         },
         leftDiagonal: function(){
@@ -295,6 +305,53 @@ let app = new Vue({
             }
             return false;
 
+        },
+
+        leftDiagonalFor5: function(){
+            let count = 0;
+            for(let g = 0; g < this.countCell; g += this.fieldSize){
+                    for(let j = g; j < this.countCell; j++){
+                    
+
+                    for(let i = j; i < this.countCell; i += this.fieldSize + 1){
+                        if(this.field[i]!=0 && this.field[i] === this.field[i + this.fieldSize + 1]){
+                                count +=1 ;
+                            }
+                    }
+                    if(count == 4){
+                        return true;
+                    }
+                    else{
+                        count = 0;
+                    }
+                }
+                
+            }
+            
+            return false;
+        },
+        rightDiagonalFor5: function(){
+            let count = 0;
+                for(let j = 0; j < this.countCell; j+=this.fieldSize){
+                    for(let g = j; g < this.countCell; g ++){
+                        for(let i = g; i < this.countCell; i += this.fieldSize - 1){
+                            if(this.field[i]!=0 && this.field[i] === this.field[i + this.fieldSize - 1]){
+                                    count +=1 ;
+                                }
+                        }
+                        if(count == 4){
+                            return true;
+                        }
+                        else{
+                            count = 0;
+                        }
+                }
+                    
+                
+                
+            }
+            
+            return false;
         },
     }
     
