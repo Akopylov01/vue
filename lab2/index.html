@@ -11,7 +11,8 @@
     <div class="content">
         <h1>Крестики-нолики</h1>
         <div id="field" v-bind:style="{width: fieldWitdh + 'px'}">
-            <input v-model="fieldSize" placeholder="Количество клеток">
+            <input v-model="fieldSize"  placeholder="Количество клеток">
+            <p v-show="errorMessage !=''">{{ errorMessage }}</p>
             <div>
                 <p v-show='scoreboardVisible'>{{xOro[0]}} vs {{xOro[1]}}</p>
                 <div v-for="(item, index) in field">

@@ -2,7 +2,7 @@
 let app = new Vue({
     el: '#field',
     data: {
-        fieldSize: 3,
+        fieldSize: '',
         scoreboardVisible: false,
         xMove: true,
         oMove: false,
@@ -17,6 +17,7 @@ let app = new Vue({
         field: [],
         fieldWitdh: '',
         countCell: '',
+        errorMessage: '',
     },
     // mounted() {
     //     if (localStorage.xName && localStorage.oName) {
@@ -134,16 +135,24 @@ let app = new Vue({
             this.isWinner = false;
             this.win = "";
             this.fieldSize = Number(this.fieldSize);
-            this.countCell = this.fieldSize * this.fieldSize;
-            this.fieldWitdh = this.fieldSize * 50 + this.fieldSize * 2;
-
-            for(let i = 0; i < this.countCell; ++i){
-                this.field[i]
+            if(this.fieldSize < 11 && this.fieldSize > 2){
+                this.errorMessage ='';
+                this.field = [];
+                this.countCell = this.fieldSize * this.fieldSize;
+                this.fieldWitdh = this.fieldSize * 50 + this.fieldSize * 2;
+                for(let i = 0; i < this.countCell; i++){
+                    Vue.set(this.field,i,0);
+                    console.log(this.fieldSize);
+                    console.log(this.field[i]);
+                }
             }
-            for(let i = 0; i < this.countCell; i++){
-                Vue.set(this.field,i,0);
+            else{
+                this.fieldSize = '';
+                this.countCell = 0;
+                this.errorMessage = 'Введите число от 3 до 10!';
             }
-            console.log(this.fieldSize);
+                
+            
         },
 
         winner: function(){
@@ -354,7 +363,7 @@ let app = new Vue({
             return false;
         },
     }
-    
+
 })
 
 
