@@ -30,7 +30,8 @@
                 <input v-show="visible" v-model="player1" placeholder="Игрок1">
                 <input v-show="visible" v-model="player2" placeholder="Игрок2">
                 <button v-show="visible" @click="savePlayers">Добавить</button>
-                <button @click="visible=!visible;">{{visible?'Скрыть':'Отобразить'}}</button>
+                <button  @click="visible=!visible;">{{visible?'Скрыть':'Отобразить'}}</button>
+            
             </div>
         </div>
     </div>
