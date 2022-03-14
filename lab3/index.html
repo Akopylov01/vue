@@ -7,21 +7,33 @@
 </head>
 <body>
     <div id="app">
-        <input v-show="!isStart" v-model="name" placeholder="Введите имя">
-        <button @click="startGame">Начать игру</button>
-        <p v-show="isStart">Привет, {{name}}</p>
-
-        <div v-show="isStart" class="table">
-            <h5>Ваши очки: {{scores}}</h5>
-            <h5>Времени осталось: {{time}}</h5>
+        <div class="userInfo">
+            <input v-show="!isStart" v-model="name" placeholder="Введите имя">
+            <button v-show="!isStart" @click="startGame">Начать игру</button>
+        </div>
         
-        <div v-show="isStart" class="container">
-            
+        <div v-show="isStart" class="table">
+            <div class="menu"> 
 
+                <div class="left">
+                    <h5>Игрок: {{name}}</h5>
+                    <h5>Ваши очки: {{scores}}</h5>
+                </div>
+                <div class="right">
+                    <h5>Времени осталось: {{time}}</h5>
+                    <button @click="startGame">Заново</button>
+                </div>
+            </div>
+            
+        <div v-show="isStart" class="container">
+
+                <img :style="{left: fish.left + 'px', top: fish.top + 'px', width: fish.width + 'px', height: fish.height + 'px'}"
+                v-for="(fish, index) in fishes" @click="takeFish(index)" :class="{'turn' : fish.turn}" :src="fish.img">
         </div>
 
 
 
+        </div>
     </div>
     
         
