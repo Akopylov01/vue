@@ -1,0 +1,9 @@
+.container{
+	width: 1000px;
+	height: 640px;
+	background-image: url("../media/фон.jpg") ;
+}
+.fish1{
+	width: 150px;
+	height: 100px;
+}

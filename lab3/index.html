@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Рыбки</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="app">
+        <input v-show="!isStart" v-model="name" placeholder="Введите имя">
+        <button @click="startGame">Начать игру</button>
+        <p v-show="isStart">Привет, {{name}}</p>
+
+        <div v-show="isStart" class="table">
+            <h5>Ваши очки: {{scores}}</h5>
+            <h5>Времени осталось: {{time}}</h5>
+        
+        <div v-show="isStart" class="container">
+            
+
+        </div>
+
+
+
+    </div>
+    
+        
+    <script src="js/vue.min.js"></script>
+    <script defer src="js/main.js"></script>
+</body>
+</html>
