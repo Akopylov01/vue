@@ -7,8 +7,9 @@ let app = new Vue({
         result: [],
         fishes: [],
         class: ['fish1','fish2','fish3'],
-        time: 60,
+        time: 15,
         interval:'',
+        fishCount: 5,
     },
     methods: {
         startGame: function(){
@@ -23,16 +24,21 @@ let app = new Vue({
                 this.time -- ;
 
                 if (this.time <= 0){
-                    this.endGame(this.interval);
+                    this.endGame();
                 } 
                 else{
-                    this.fishCreate();
+                    for(let i = 0; i<this.fishCount; i++){
+                        this.fishCreate();
+                        this.fishCount--;
+                    }
+                    
                 }
 
             }, 1000);
 
         },
         endGame: function(){
+            this.time = 15;
             this.isStart = false;
             this.resetTimer();
             this.result.push({
@@ -45,13 +51,29 @@ let app = new Vue({
         resetTimer: function(){
             return clearInterval(this.interval);
         },
+        makeTurn: function(fish){
+            setInterval(() => {
+                if(fish.left == 0){
+                    fish.turn = true;
+                }
+                else if(fish.left >= 850){
+                    fish.turn = false;
+                }
+                if(fish.turn){
+                    fish.left++;
+                }
+                if(!fish.turn){
+                    fish.left--;
+                }
+            }, 1)
+        },
         fishCreate: function(){
                 let type = Math.floor(Math.random() * 3);
                 let fish = {
-                    type:type, 
-                    top: Math.floor(Math.random() * 640),
-                    left: Math.floor(Math.random() * (1000 - 150)),
-                    turn:false 
+                    type: type, 
+                    top: Math.floor(Math.random() * (640 - 150)),
+                    left: Math.floor(Math.random() * (1000 - 250)),
+                    turn: false 
                 }
                 if(fish.type == 1){
                     fish.img = 'media/fish1.png';
@@ -78,34 +100,19 @@ let app = new Vue({
                 this.makeTurn(fish);
             }
         },
-        makeTurn: function(obj){
-            setInterval(() => {
-                if(obj.left == 0){
-                    obj.turn = false;
-                }
-                else{
-                    obj.turn = true;
-                }
-                if(obj.turn){
-                    obj.left--;
-                }
-                else{
-                    obj.left++;
-                }
-            }, 100)
-        },
-        takeFish: function(index){
-            if(this.fishes[index].type==1){
-                this.scores += 35;
-            }
-            else if(this.fishes[index].type==2){
-                this.scores += 55;
+    
+        // takeFish: function(index){
+        //     if(this.fishes[index].type==1){
+        //         this.scores += 35;
+        //     }
+        //     else if(this.fishes[index].type==2){
+        //         this.scores += 55;
 
-            }
-            else if(this.fishes[index].type==3){
-                this.scores += 70;
+        //     }
+        //     else if(this.fishes[index].type==3){
+        //         this.scores += 70;
 
-            }
-            this.fishes.splice(index, 1)
-        },
+        //     }
+        //     this.fishes.splice(index, 1)
+        // },
 });

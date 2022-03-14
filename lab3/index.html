@@ -25,11 +25,11 @@
                 </div>
             </div>
             
-        <div v-show="isStart" class="container">
-
-                <img :style="{left: fish.left + 'px', top: fish.top + 'px', width: fish.width + 'px', height: fish.height + 'px'}"
-                v-for="(fish, index) in fishes" @click="takeFish(index)" :class="{'turn' : fish.turn}" :src="fish.img">
-        </div>
+            <div v-show="isStart" class="container">
+                <p></p>
+                    <img :style="{left: fish.left + 'px', top: fish.top + 'px', width: fish.width + 'px', height: fish.height + 'px'}"
+                    v-for="(fish, index) in fishes" @click="takeFish(index)" :class="{'turn' : fish.turn}" :src="fish.img">
+            </div>
 
 
 
