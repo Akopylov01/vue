@@ -11,28 +11,43 @@
             <input v-show="!isStart" v-model="name" placeholder="Введите имя">
             <button v-show="!isStart" @click="startGame">Начать игру</button>
         </div>
-        
+        <div class="recordTable" v-show="result">
+            <h3>Топ 10 Игроков:</h3>
+            <div v-for="user in result">
+                <p>Игрок {{user.name}} : {{user.scores}} очков</p>
+            </div>
+
+        </div>
         <div v-show="isStart" class="table">
             <div class="menu"> 
-
                 <div class="left">
-                    <h5>Игрок: {{name}}</h5>
+                    <h5>Игрок: {{name}}, <span class="time">Времени осталось: {{time}}</span></h5>
                     <h5>Ваши очки: {{scores}}</h5>
-                </div>
-                <div class="right">
-                    <h5>Времени осталось: {{time}}</h5>
-                    <button @click="startGame">Заново</button>
                 </div>
             </div>
             
+            
             <div v-show="isStart" class="container">
-                <p></p>
-                    <img :style="{left: fish.left + 'px', top: fish.top + 'px', width: fish.width + 'px', height: fish.height + 'px'}"
-                    v-for="(fish, index) in fishes" @click="takeFish(index)" :class="{'turn' : fish.turn}" :src="fish.img">
+
+                <div v-for="(fish, index) in fishes">
+
+                    <div class="fish" :style="{left: fish.left + 'px', top: fish.top + 'px'}">
+
+                            <img :style="{width: fish.width + 'px', height: fish.height + 'px'}" :class="{'turn' : fish.turn}" :src="fish.img" @click="takeFish(index);">
+
+                    </div>
+
+                </div>
+                    
+                
+
+                    
+
+                
+                    
             </div>
-
-
-
+            
+            
         </div>
     </div>
     

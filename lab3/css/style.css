@@ -1,4 +1,6 @@
-
+.time{
+	transition: 1s;
+}
 .container{
 	width: 1000px;
 	height: 640px;
@@ -8,23 +10,9 @@
 }
 .fish{
 	position: absolute;
+	cursor: pointer;
+	user-select: none;
 }
-.fish1{
-	position: absolute;
-	width: 75px;
-	height: 150px;
-}
-.fish2{
-	position: absolute;
-	width: 60px;
-	height: 120px;
-}
-.fish3{
-	position: absolute;
-	width: 40px;
-	height: 80px;
-}
-
 .userInfo{
 	margin-top: 30px;
 }
@@ -34,5 +22,9 @@
 }
 .turn{
 	transform: scaleX(-1);
-	position: absolute;
+	transition: 0.5s;
+}
+.recordTable{
+	margin-right: 40px;
+	float: right;
 }
