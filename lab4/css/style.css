@@ -1,0 +1,86 @@
+#app{
+	display: flex;
+	justify-content: center;
+}
+.elem{
+	margin-top: 50px;
+	width: 1024px;
+}
+.elemHead{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 36px;
+}
+.nameTask{
+	margin-left: 10px;
+}
+.taskList{
+	list-style-type: none;
+}
+.task{
+	display: flex;
+}
+.taskList li{
+	margin-top: 10px;
+}
+.taskList li input{
+	margin-right: 20px;
+}
+.elemButtons{
+	margin-right: 10px;
+}
+.searchImg{
+	width: 24px;
+}
+.addImg{
+	width: 24px;
+}
+.searchButton{
+	margin-left:5px;
+	background-color: rgb(255, 255, 255);
+	height: 28px;
+	border: none;
+	cursor: pointer;
+}
+.searchInput{
+	height: 24px;
+	width: 300px;
+}
+.search{
+	margin-left:10px;
+	display: flex;
+	align-items: center;
+}
+.setting{
+	margin-right: 10px;
+	display: flex;
+	align-items: center;
+	color: white;
+	font-size: 24px;
+}
+.addButton{
+	background-color: rgb(255, 255, 255);
+	height: 28px;
+	border: none;
+	cursor: pointer;
+	margin-left: 5px;
+
+}
+.addButton:hover{
+	box-shadow: 2px 2px 2px 1px black;
+}
+.searchButton:hover{
+	box-shadow: 2px 2px 2px 1px black;
+}
+.header{
+	position: fixed;
+	top: 0;
+	margin: 0;
+	background-color: rgb(174, 87, 255);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 1024px;
+	height: 40px;
+}

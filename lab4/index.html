@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Рыбки</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="js/vue.min.js"></script>
+
+    <script defer src="js/main.js"></script>
+
+</head>
+<body>
+    <div id="app">
+        <div class="header">
+            <div class="search">
+                <input class="searchInput" type="text" v-model="searchStr" placeholder="Искать по названию">
+                <button class="searchButton"><img class="searchImg" src="media/search (1).png" alt=""></button>
+            </div>
+            <div class="setting">
+                <p>Todo</p>
+                <button class="addButton">
+                <img class="addImg" src="media/plus (1).png" alt="">
+                </button>
+            </div>
+        </div>
+        <div class="contaier">
+            <div class="elem" v-for="(item, index) in tasks">
+                <div class="elemHead">
+                    <div class="nameTask">
+                        <h3>{{item.name}}</h3>
+                    </div>
+                    <div class="elemButtons">
+                        <button>Сменить цвет</button>
+                        <button>Удалить</button>
+                        <button>Изменить</button>
+                    </div>
+                </div>
+                <div class="task" v-for="(itemJ, indexJ) in item">
+                    <ul class="taskList">
+                        <li v-for="(itemI, indexI) in itemJ">
+                            <input type="checkbox">{{itemJ}}
+                            <input type="text"><button>Изменить</button><button>Удалить</button>
+                        </li>
+                        <li><input type="checkbox" disabled="true"><input type="text" placeholder="Добавить новую задачу">
+                            <button>Добавить</button></li>
+                </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
