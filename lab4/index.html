@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Рыбки</title>
+    <title>Todo</title>
     <link rel="stylesheet" href="css/style.css">
 
     <script src="js/vue.min.js"></script>
@@ -11,6 +11,7 @@
 
 </head>
 <body>
+    
     <div id="app">
         <div class="header">
             <div class="search">
@@ -19,12 +20,25 @@
             </div>
             <div class="setting">
                 <p>Todo</p>
-                <button class="addButton">
-                <img class="addImg" src="media/plus (1).png" alt="">
-                </button>
+                <button @click="showModal = true" class="addButton"><img class="addImg" src="media/plus (1).png" alt=""></button>
+
             </div>
         </div>
-        <div class="contaier">
+        <div v-if="showModal" class="modalMask">
+            <div class="modalWrapper">
+                <div class="modal">
+                    <div class="modalTitle">
+                                <h3>Добавление новой задачи</h3>
+                            </div>
+                            <input v-model='taskListName' type="text" placeholder="Название..">
+                            <div class="modalButtons">
+                                <button @click="showModal = false">Закрыть</button>
+                                <button @click="addTaskList">Добавить</button>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        <div v-show="showTask" class="contaier">
             <div class="elem" v-for="(item, index) in tasks">
                 <div class="elemHead">
                     <div class="nameTask">
@@ -36,19 +50,21 @@
                         <button>Изменить</button>
                     </div>
                 </div>
-                <div class="task" v-for="(itemJ, indexJ) in item">
+                <div class="task" v-for="itemJ in item.task">
                     <ul class="taskList">
-                        <li v-for="(itemI, indexI) in itemJ">
-                            <input type="checkbox">{{itemJ}}
-                            <input type="text"><button>Изменить</button><button>Удалить</button>
-                        </li>
-                        <li><input type="checkbox" disabled="true"><input type="text" placeholder="Добавить новую задачу">
-                            <button>Добавить</button></li>
-                </ul>
+                        <li>
+                            <input type="checkbox"><span>{{itemJ}}</span>
+                        </li>    
+                    </ul>
                 </div>
+                <ul>
+                <li><input type="checkbox" disabled="true"><input type="text" placeholder="Добавить новую задачу"><button>Добавить</button></li>
+                </ul>
             </div>
         </div>
     </div>
+    
+        
 
 </body>
 </html>
