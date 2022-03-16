@@ -48,12 +48,27 @@ li{
 	width: 1024px;
 }
 .elemHead{
+	width: 1024px;
+	margin:0;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	height: 36px;
 }
+.elemHeadBlack{
+	width: 1024px;
+	margin:0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 36px;
+	background-color: black;
+	color: white;
+}
 .nameTask{
+	margin-top: 20px;
+}
+.nameTask h3{
 	margin-left: 10px;
 }
 .taskList{
@@ -83,6 +98,8 @@ li{
 	height: 28px;
 	border: none;
 	cursor: pointer;
+	width: 40px;
+
 }
 .searchInput{
 	height: 24px;
@@ -106,6 +123,7 @@ li{
 	border: none;
 	cursor: pointer;
 	margin-left: 5px;
+	width: 40px;
 
 }
 .addButton:hover{
@@ -124,4 +142,13 @@ li{
 	align-items: center;
 	width: 1024px;
 	height: 40px;
+}
+button{
+	margin-left: 5px;
+	margin-right: 5px;
+	border: none;
+	color: #fff;
+	width: 90px;
+	height: 21px;
+	background-color: rgb(107, 41, 124);
 }
