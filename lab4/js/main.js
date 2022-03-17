@@ -16,25 +16,10 @@ let app = new Vue({
         tempId:'',
         tempNameId:'',
     },
-    // computed: {
-    //     searchTask() {
-    //       if (this.searchStr) {
-    //         return this.tasks.filter(item => {
-    //             return item.name.includes(this.searchStr);
-    //         });
-    //       }
-    //       return this.tasks;
-    //     }
-    // },
-    mounted() {
-        if (localStorage.getItem('tasks')) {
-          try {
-            this.tasks = JSON.parse(localStorage.getItem('tasks'));
-          } catch(e) {
-            localStorage.removeItem('tasks');
-          }
-        }
-      },
+
+    created(){
+        this.tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+    },
     methods: {
         
         classNameHead: function(id) {
@@ -45,6 +30,21 @@ let app = new Vue({
             {
                 this.colorClass='elemHead';
             }
+        },
+        saveTask() {
+            const parsed = JSON.stringify(this.tasks);
+            localStorage.setItem('tasks', parsed);
+        },
+        deleteTaskList: function(id){
+
+            this.tasks.splice(id, 1);
+            this.saveTask();
+
+        },
+        
+        deleteTaskName: function(id, elemId){
+            this.tasks[id].task.splice(elemId, 1);
+            this.saveTask();
         },
         addTaskList: function(){
             let date = new Date().toLocaleString();
@@ -93,13 +93,7 @@ let app = new Vue({
             this.tasks[this.tempId].name = this.changeListName;
             this.editTaskListModal = false;
         },
-        deleteTaskList: function(id){
-            this.tasks.splice(id, 1);
-        },
-        saveTask() {
-            const parsed = JSON.stringify(this.tasks);
-            localStorage.setItem('tasks', parsed);
-        },
+        
         isDone: function(){
             this.lineStyle = 'line';
         }

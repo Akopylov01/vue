@@ -15,8 +15,7 @@
         <div id="app">
             <div class="header">
                 <div class="search">
-                    <!-- <input class="searchInput" type="text" v-model="searchStr" placeholder="Искать по названию">
-                    <button class="searchButton"><img class="searchImg" src="media/search (1).png" alt=""></button> -->
+                    <!-- <input class="searchInput" type="text" v-model="searchStr" placeholder="Искать по названию"> -->
                 </div>
                 <div class="setting">
                     <p>Todo</p>
@@ -73,7 +72,7 @@
                                 <div class="elemHead">
                                     <h3>{{item.name}}</h3>
                                     <div class="elemButtons">
-                                        <button @click="tasks.splice(index, 1)">Удалить</button>
+                                        <button @click="deleteTaskList(index)">Удалить</button>
                                         <button @click="editTaskListModalFunc(index)">Изменить</button>
                                     </div>
                                 </div>
@@ -82,7 +81,7 @@
                                         <li>
                                             <span :class="value.className" v-on:click="value.className = 'line'">{{value.taskName}}</span>
                                             <button @click="editTaskNameFunc(index, index1)">Изменить</button>
-                                            <button @click="tasks[index].task.splice(index1, 1)">Удалить</button>
+                                            <button @click="deleteTaskName(index, index1)">Удалить</button>
     
                                         </li>    
                                     </ul>
