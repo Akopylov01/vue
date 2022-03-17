@@ -6,15 +6,15 @@ let app = new Vue({
         tasks:[],
         searchStr:'',
         showModal:false,
-        showTask: false,
+        showTask: true,
         taskListName: '',
         taskName:'',
+        changeName: '',
         changeListName:'',
         editTaskListModal: false,
+        editTaskNameModal: false,
         tempId:'',
-        classColor:'elemHead',
-        color:'white',
-        fontColor:'',
+        tempNameId:'',
     },
     // computed: {
     //     searchTask() {
@@ -26,19 +26,17 @@ let app = new Vue({
     //       return this.tasks;
     //     }
     // },
+    mounted() {
+        if (localStorage.getItem('tasks')) {
+          try {
+            this.tasks = JSON.parse(localStorage.getItem('tasks'));
+          } catch(e) {
+            localStorage.removeItem('tasks');
+          }
+        }
+      },
     methods: {
-        editColor: function(id){
-            if(this.tasks[id].color = 'white'){
-                this.tasks[id].color = 'black';
-                this.tasks[id].fontColor = 'white';
-
-            }
-            else{
-                this.tasks[id].color = 'white';
-                this.tasks[id].fontColor = 'black';
-
-            }
-        },
+        
         classNameHead: function(id) {
             if(this.tasks[id].swapColor == true) {
                 this.colorClass='elemHeadBlack';
@@ -55,16 +53,32 @@ let app = new Vue({
             { 
                 return false;
             }
-            this.tasks.push({ name:this.taskListName, task:[], date: date, color:'white'});
+            this.tasks.push({ name:this.taskListName, task:[], date: date, taskName:'',});
             this.showTask = this.tasks.length;
             this.showModal = false;
             this.taskListName = '';
-        },
-        addTask: function(id){
-            this.tasks[id].task.push(this.taskName);
-            console.log(this.tasks);
-            this.taskName = '';
+            this.saveTask();
 
+        },
+        addTask: function(id, taskName){
+            this.tasks[id].task.push({taskName:taskName, className: 'notLine'});
+            console.log(this.tasks);
+            this.tasks[id].taskName = '';
+            this.saveTask();
+        },
+        editTaskNameFunc: function(id, nameId){
+            this.tempId = id;
+            this.tempNameId = nameId;
+            this.changeName = this.tasks[id].task[nameId].taskName;
+            this.editTaskNameModal = true;
+        },
+        editTaskName: function(){
+            if (this.changeName.trim() == '') 
+            { 
+                return false; 
+            }
+            this.tasks[this.tempId].task[this.tempNameId].taskName = this.changeName;
+            this.editTaskNameModal = false;
         },
         editTaskListModalFunc: function(id){
             this.tempId = id;
@@ -81,9 +95,24 @@ let app = new Vue({
         },
         deleteTaskList: function(id){
             this.tasks.splice(id, 1);
+        },
+        saveTask() {
+            const parsed = JSON.stringify(this.tasks);
+            localStorage.setItem('tasks', parsed);
+        },
+        isDone: function(){
+            this.lineStyle = 'line';
         }
         
     },
+    // computed: {
+    //     isDone: function(){
+    //         if(this.line){
+    //             return 'line'
+    //         }
+    //         return 'notLine'
+    //     },
+    // }
 
         
 });

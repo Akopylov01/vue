@@ -11,80 +11,95 @@
 
 </head>
 <body>
-    
-    <div id="app">
-        <div class="header">
-            <div class="search">
-                <input class="searchInput" type="text" v-model="searchStr" placeholder="Искать по названию">
-                <button class="searchButton"><img class="searchImg" src="media/search (1).png" alt=""></button>
-            </div>
-            <div class="setting">
-                <p>Todo</p>
-                <button @click="showModal = true" class="addButton"><img class="addImg" src="media/plus (1).png" alt=""></button>
-
-            </div>
-        </div>
-        <div v-if="showModal" class="modalMask">
-            <div class="modalWrapper">
-                <div class="modal">
-                    <div class="modalTitle">
-                                <h3>Добавление новой задачи</h3>
-                            </div>
-                            <input v-model='taskListName' type="text" placeholder="Название..">
-                            <div class="modalButtons">
-                                <button @click="showModal = false">Закрыть</button>
-                                <button @click="addTaskList">Добавить</button>
-                            </div>
-                    </div>
+    <div class="app">
+        <div id="app">
+            <div class="header">
+                <div class="search">
+                    <!-- <input class="searchInput" type="text" v-model="searchStr" placeholder="Искать по названию">
+                    <button class="searchButton"><img class="searchImg" src="media/search (1).png" alt=""></button> -->
                 </div>
-        </div>
-        <div v-if="editTaskListModal" class="modalMask">
-            <div class="modalWrapper">
-                <div class="modal">
-                    <div class="modalTitle">
-                                <h3>Изменение задачи</h3>
-                            </div>
-                            <input v-model='changeListName' type="text">
-                            <div class="modalButtons">
-                                <button @click="editTaskListModal = false">Закрыть</button>
-                                <button @click="editTaskList">Изменить</button>
-                            </div>
+                <div class="setting">
+                    <p>Todo</p>
+                    <button @click="showModal = true" class="addButton"><img class="addImg" src="media/plus (1).png" alt=""></button>
+    
+                </div>
+            </div>
+            <div v-if="showModal" class="modalMask">
+                <div class="modalWrapper">
+                    <div class="modal">
+                        <div class="modalTitle">
+                                    <h3>Добавление новой задачи</h3>
+                                </div>
+                                <input v-model='taskListName' type="text" placeholder="Название..">
+                                <div class="modalButtons">
+                                    <button @click="showModal = false">Закрыть</button>
+                                    <button @click="addTaskList">Добавить</button>
+                                </div>
+                        </div>
                     </div>
             </div>
-        </div>
-        <div v-show="showTask" class="contaier">
-            <div class="elem">
-                    <div v-for="(item, index) in tasks">
-                        <div class="nameTask">
-                            <div class="elemHead">
-                                <h3>{{item.name}}</h3>
-                                <div class="elemButtons">
-                                    <button @click="editColor(index)">Цвет</button>
-                                    <button @click="tasks.splice(index, 1)">Удалить</button>
-                                    <button @click="editTaskListModalFunc(index)">Изменить</button>
+            <div v-if="editTaskListModal" class="modalMask">
+                <div class="modalWrapper">
+                    <div class="modal">
+                        <div class="modalTitle">
+                                    <h3>Изменение задачи</h3>
+                                </div>
+                                <input v-model='changeListName' type="text">
+                                <div class="modalButtons">
+                                    <button @click="editTaskListModal = false">Закрыть</button>
+                                    <button @click="editTaskList">Изменить</button>
+                                </div>
+                        </div>
+                </div>
+            </div>
+            <div v-if="editTaskNameModal" class="modalMask">
+                <div class="modalWrapper">
+                    <div class="modal">
+                        <div class="modalTitle">
+                                    <h3>Изменение задачи</h3>
+                                </div>
+                                <input v-model='changeName' type="text">
+                                <div class="modalButtons">
+                                    <button @click="editTaskNameModal = false">Закрыть</button>
+                                    <button @click="editTaskName">Изменить</button>
+                                </div>
+                        </div>
+                </div>
+            </div>
+            <div v-show="showTask" class="contaier">
+                <div class="elem">
+                        <div v-for="(item, index) in tasks">
+                            <div class="nameTask">
+                                <div class="elemHead">
+                                    <h3>{{item.name}}</h3>
+                                    <div class="elemButtons">
+                                        <button @click="tasks.splice(index, 1)">Удалить</button>
+                                        <button @click="editTaskListModalFunc(index)">Изменить</button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <ul class="taskList" v-for="(value, index1) in item.task">
+                                        <li>
+                                            <span :class="value.className" v-on:click="value.className = 'line'">{{value.taskName}}</span>
+                                            <button @click="editTaskNameFunc(index, index1)">Изменить</button>
+                                            <button @click="tasks[index].task.splice(index1, 1)">Удалить</button>
+    
+                                        </li>    
+                                    </ul>
+                                    <ul>
+                                        <li>{{item.date}}</li>
+                                        <input v-model="item.taskName" type="text" placeholder="Добавить новую задачу"><button @click="addTask(index, item.taskName)">Добавить</button>
+    
+                                    </ul>
+    
                                 </div>
                             </div>
-                            <div>
-                                <ul class="taskList" v-for="(value, index1) in item.task">
-                                    <li>
-                                        {{value}}
-                                        <button >Изменить</button>
-                                        <button @click="tasks[index].task.splice(index1, 1)">Удалить</button>
-
-                                    </li>    
-                                </ul>
-                                <ul>
-                                    <li>{{item.date}}</li>
-                                    <input v-model="taskName" type="text" placeholder="Добавить новую задачу"><button @click="addTask(index)">Добавить</button>
-
-                                </ul>
-
-                            </div>
-                        </div>
-                    </div>       
+                        </div>       
+                </div>
             </div>
         </div>
     </div>
+    
     
         
 

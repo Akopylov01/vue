@@ -1,6 +1,17 @@
-#app{
+
+
+.app{
 	display: flex;
 	justify-content: center;
+}
+.line{
+	text-decoration: line-through;
+	cursor: pointer;
+
+}
+.notLine{
+	text-decoration: none;
+	cursor: pointer;
 }
 .modalMask{
 	position: fixed;
@@ -55,16 +66,7 @@ li{
 	align-items: center;
 	height: 36px;
 }
-.elemHeadBlack{
-	width: 1024px;
-	margin:0;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	height: 36px;
-	background-color: black;
-	color: white;
-}
+
 .nameTask{
 	margin-top: 20px;
 }
@@ -151,4 +153,21 @@ button{
 	width: 90px;
 	height: 21px;
 	background-color: rgb(107, 41, 124);
+}
+@media (max-width: 1024px) {
+	.app{
+		width: 100%;
+	}
+	body{
+		width: 100%;
+	}
+	.header{
+		height: 40px;
+		width: 100%;
+	}
+	.contaier{
+		width: 90%;
+		margin-left: 2%;
+	}
+	
 }
